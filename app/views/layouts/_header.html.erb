@@ -1,0 +1,18 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "GS", root_path, id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">
+            <% if current_user %>
+              <li><%= link_to "Create Snippet", new_snippet_path%></li>
+              <li id="userlogin">Signed in as <strong><%= link_to current_user.name, snippets_path %></strong>!</li>
+              <li><%= link_to "Sign out", signout_path, id: "sign_out" %></li>
+            <% else %>
+              <li><%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %></li>
+            <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,30 @@
+<%provide(:title,"New snippet")%>
+<h1>Create your snippet</h1>
+
+<div class="row">
+	<div class="span8">
+		<%= form_for(@snippet) do |f|%>
+		<%= render 'shared/errors_message' %>
+		<%= f.label :name%>
+		<%= f.text_field :poster, class: 'fixinput'%>
+
+		<%= f.label :syntax%>
+		<% syntaxes_array = Syntax.all.map { |syntax| [syntax.name, syntax.id] } %>
+		<%= f.select :syntax_id,syntaxes_array%>
+
+		<%= f.label :content%>
+		<%= f.text_area :content%>
+		<% if current_user%>
+			<div>
+				<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-danger">
+	    		<%= f.check_box :private%>Private
+	  		</label>
+	  		</div>
+  		</div>
+		<% end%>
+		<br/>
+		<div><%= f.submit "Create", class:"btn btn-normal btn-primary"%></div>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,43 @@
+<%provide(:title,"List snippet")%>
+<%if @snippets%>
+<div id="hohohaha"><ul class="list-group">
+  <li class= "list-group-item statics"><span class="glyphicon glyphicon-align-left"></span> Statics Language</li>
+<% syntaxes = Syntax.all%>
+<% syntaxes.each do |syntax|%>
+  <li class="list-group-item statics">
+    <span class="badge badge-info"><%=Snippet.where(user_id:current_user.id,syntax_id:syntax.id).count%></span>
+    <%=syntax.name%>
+  </li>
+<%end%>
+</ul></div>
+<% unless @snippets.count>0 %>
+<div class="alert">You have <%=@snippets.count%> snippet</div>
+<% end %>
+<%= will_paginate %>
+<ul class="snippets nav nav-pills nav-stacked">
+<% @snippets.each do |snippet|%>
+  <li class="sp_click" href="<%= snippet_path(snippet.token) %>" >
+    <span class="content"><%= link_to snippet.poster, snippet%></span>
+    <span class="timestamp" data-toggle="tooltip" data-placement="bottom" title="<%=snippet.created_at%>">
+        Posted <%= time_ago_in_words(snippet.created_at) %> ago.
+    </span>
+    <span class="badge badge-important pull-right"><%=snippet.syntax.name%></span>
+    <%if snippet.private%>
+      <span class="badge badge-inverse pull-right">Private</span> 
+    <%else%>
+      <span class="badge badge-success pull-right">Public</span>
+    <%end%>
+</li>
+<%end%>
+</ul>
+<%= will_paginate %>
+<%else%>
+<div class="alert alert-errors"><center>You are not member</span></center></div>
+<h1><%=link_to "Create snippet with out register", new_snippet_path%></h1>
+<%end%>
+
+<script>
+$(document).ready(function(){
+  $('.sp_click').click(function(){ window.location = $(this).attr('href') });
+});
+</script>

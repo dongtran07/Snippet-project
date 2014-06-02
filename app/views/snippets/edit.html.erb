@@ -16,7 +16,7 @@
     <%= f.text_area :content%>
     <div>
         <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-danger">
+        <label class="btn btn-danger <%=@snippet.private%>">
           <%= f.check_box :private%>Private
         </label>
         </div>
@@ -26,3 +26,6 @@
     <% end %>
   </div>
 </div>
+<script>
+        $('.true').button('toggle');
+</script>
